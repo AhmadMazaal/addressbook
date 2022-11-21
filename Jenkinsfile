@@ -1,14 +1,28 @@
 pipeline {
     agent any
+
     stages {
-        stage('clone the repo') {
-            steps {
-                git "https://github.com/vaadin/addressbook"
+        stage ("clone the project") {
+            steps{
+                git "https://github.com/upshiftnow/addressbook.git"
             }
         }
-        stage('compile') {
+        stage ("compile") {
             steps {
+                echo "executing Compilation"
                 sh "mvn compile"
+            }
+        }
+        stage ("tests") {
+            steps {
+                echo "executing tests"
+                sh "mvn test"
+            }
+        }
+        stage ("package") {
+            steps {
+                echo "Creating a package"
+                sh "mvn package"
             }
         }
     }
